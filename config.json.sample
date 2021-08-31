@@ -1,3 +1,20 @@
 {
-    "BOT_TOKEN": "YOUR DISCORD BOT TOKEN"
+    "BOT_TOKEN": "BOT TOKEN HERE",
+    "PRESENCE_NAME": "DayZ",
+    "PRESENCE_TYPE": "WATCHING",
+    "POLLING_INTERVAL": 10,
+    "SERVERS": [
+        {
+            "NAME": "Server 1",
+            "CHANNEL_ID": "DISCORD VOICE CHANNEL ID",
+            "CFTOOLS_HOSTNAME": "GAME SERVER IP",
+            "CFTOOLS_PORT": "2302"
+        },
+        {
+            "NAME": "Server 2",
+            "CHANNEL_ID": "DISCORD VOICE CHANNEL ID",
+            "CFTOOLS_HOSTNAME": "GAME SERVER IP",
+            "CFTOOLS_PORT": "2402"
+        }
+    ]
 }
