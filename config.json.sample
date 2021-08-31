@@ -2,7 +2,7 @@
     "BOT_TOKEN": "BOT TOKEN HERE",
     "PRESENCE_NAME": "DayZ",
     "PRESENCE_TYPE": "WATCHING",
-    "POLLING_INTERVAL": 10,
+    "POLLING_INTERVAL": 30,
     "SERVERS": [
         {
             "NAME": "Server 1",
