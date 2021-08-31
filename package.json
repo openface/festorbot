@@ -13,7 +13,7 @@
   "author": "Jason Hines",
   "license": "ISC",
   "dependencies": {
+    "cftools-sdk": "^1.6.3",
     "discord.js": "^13.1.0"
-  },
-  "devDependencies": {}
+  }
 }

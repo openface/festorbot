@@ -1,6 +1,7 @@
 // Require the necessary discord.js classes
 const Discord = require('discord.js');
 const Config = require('./config.json');
+const { CFToolsClientBuilder, Game } = require('cftools-sdk');
 
 const Client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS] });
 
@@ -19,22 +20,36 @@ Client.once('ready', () => {
 
     setInterval(() => {
         Config.SERVERS.forEach((Server) => {
-            console.log(`Checking ${Server.NAME}...`)
+            console.log(`Polling server ${Server.NAME}...`)
 
-            let channel = Client.channels.cache.get(Server.CHANNEL_ID)
+            getServerStatus(Server.CFTOOLS_HOSTNAME, Server.CFTOOLS_PORT).then((details) => {
 
-            let new_channel_name = `${Server.NAME}: 1/60`
+                let player_stats = details.status.players;
 
-            if (channel.name != new_channel_name) {
+                let channel = Client.channels.cache.get(Server.CHANNEL_ID)
+                let new_channel_name = `${Server.NAME}: ${ player_stats.online }/${ player_stats.slots }`
+
+                if (channel.name == new_channel_name) return;
+
                 channel.setName(new_channel_name)
-                    .then(newChannel => console.log(`Channel's new name is ${newChannel.name}`))
+                    .then(newChannel => console.log(`Setting channel name: ${newChannel.name}`))
                     .catch(console.error);
-            }
+            }).catch(function (error) {
+                console.log(error);
+            });
         });
-    }, Config.UPDATE_INTERVAL);
+    }, Config.POLLING_INTERVAL * 1000);
 });
 
 Client.login(Config.BOT_TOKEN);
 
-
+async function getServerStatus(hostname, port) {
+    let cftools_client = new CFToolsClientBuilder().build();
+    let details = cftools_client.getGameServerDetails({
+        game: Game.DayZ,
+        ip: hostname,
+        port: port,
+    })
+    return await details;
+}
 
