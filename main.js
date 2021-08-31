@@ -8,7 +8,6 @@ const Client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS] });
 // When the client is ready, run this code (only once)
 Client.once('ready', () => {
     console.log(`Connected to discord as ${Client.user.username}.`);
-    const channel = Client.channels.cache.get(Config.CHANNEL_ID)
 
     Client.user.setPresence({
         status: 'idle',
@@ -20,11 +19,11 @@ Client.once('ready', () => {
 
     setInterval(() => {
         Config.SERVERS.forEach((Server) => {
-            console.log(`Polling server ${Server.NAME}...`)
-
             getServerStatus(Server.CFTOOLS_HOSTNAME, Server.CFTOOLS_PORT).then((details) => {
 
                 let player_stats = details.status.players;
+                console.log(`Polled server ${Server.NAME} (${Server.CFTOOLS_HOSTNAME}:${Server.CFTOOLS_PORT})...`);
+                console.log(player_stats);
 
                 let channel = Client.channels.cache.get(Server.CHANNEL_ID)
                 let new_channel_name = `${Server.NAME}: ${ player_stats.online }/${ player_stats.slots }`
