@@ -35,8 +35,6 @@ Simply rename the included `config.json.sample` to `config.json` and edit accord
 
 #### Running Directly
 
-Just launch it with node (for now).
-
 ```
 npm install
 node .
