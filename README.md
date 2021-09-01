@@ -45,6 +45,6 @@ node .
 #### Running in Docker
 
 ```
-docker build . -t openface/festor
-docker run -it --init openface/festor
+docker build . -t openface/festorbot
+docker run -it --init openface/festorbot
 ```
