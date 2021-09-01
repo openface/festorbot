@@ -22,6 +22,8 @@ from CFTools Cloud can be done without authentication, so this setup is dead sim
 
 Simply rename the included `config.json.sample` to `config.json` and edit accordingly.
 
+| Option | Description |
+| ------ | ----------- |
 | BOT_TOKEN                 | Discord bot token to identify it on discord |
 | PRESENCE_NAME             | Name of activity the bot is doing |
 | PRESENCE_TYPE             | Type of activity the bot is doing (PLAYING, STREAMING, WATCHING, etc) |
