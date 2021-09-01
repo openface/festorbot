@@ -1,7 +1,7 @@
 ## CFTools DayZ Player Counting Discord Bot
 
 Since CDPCDB is a terrible name for a project, we'll just call it *festor*.   Fester is a stupid simple
-node-based discord bot that integrates in with CFTools Cloud to retrieve game server statistics.
+node-based discord bot that integrates in with CFTools Cloud to retrieve DayZ game server statistics.
 
 It then renames specific channels based on the player counts/slots for DayZ servers.  It does this by 
 naming the voice channels within your Discord server.  (Eg. `HotShitWorld: 0/50`)
