@@ -5,9 +5,17 @@ const { CFToolsClientBuilder, Game } = require('cftools-sdk');
 
 const Client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS] });
 
+// Handle ctrl-c to run bot when run interactively
+process.on('SIGINT', () => {
+    console.info("Interrupted")
+    process.exit(0)
+});
+
+console.log('Starting Discord Bot...');
+
 // When the client is ready, run this code (only once)
 Client.once('ready', () => {
-    console.log(`Connected to discord as ${Client.user.username}.`);
+    console.log(`Connected to Discord as user ${Client.user.username}.`);
 
     Client.user.setPresence({
         status: 'idle',
@@ -49,4 +57,3 @@ async function pollGameServerDetails(hostname, port) {
     })
     return await details;
 }
-

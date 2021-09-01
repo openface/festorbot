@@ -31,11 +31,18 @@ Simply rename the included `config.json.sample` to `config.json` and edit accord
 | SERVERS.CFTOOLS_HOSTNAME  | The hostname or IP of your DayZ game server |
 | SERVERS.CFTOOLS_PORT      | Your DayZ game server port |
 
-#### Running
+#### Running Directly
 
 Just launch it with node (for now).
 
 ```
 npm install
 node .
+```
+
+#### Running in Docker
+
+```
+docker build . -t openface/festor
+docker run -it --init openface/festor
 ```
