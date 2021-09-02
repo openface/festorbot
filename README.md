@@ -42,8 +42,12 @@ node .
 #### Running in Docker
 
 ```
+# Build image
 docker build . -t openface/festorbot
+
+# Run interactively (-it) or as a daemon (-d)
 docker run -it --init openface/festorbot
+docker run -d --init openface/festorbot
 ```
 
 #### TODO
