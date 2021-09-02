@@ -25,9 +25,11 @@ Client.once('ready', () => {
         }]
     });
 
+    const CFClient = new CFToolsClientBuilder().build();
+
     setInterval(() => {
         Config.SERVERS.forEach((Server) => {
-            pollGameServerDetails(Server.CFTOOLS_HOSTNAME, Server.CFTOOLS_PORT).then((details) => {
+            pollGameServerDetails(CFClient, Server).then((details) => {
                 let player_stats = details.status.players;
                 console.log(`Polled server ${Server.NAME} (${Server.CFTOOLS_HOSTNAME}:${Server.CFTOOLS_PORT})...`);
                 console.log(player_stats);
@@ -48,12 +50,11 @@ Client.once('ready', () => {
 
 Client.login(Config.BOT_TOKEN);
 
-async function pollGameServerDetails(hostname, port) {
-    let cftools_client = new CFToolsClientBuilder().build();
-    let details = cftools_client.getGameServerDetails({
+async function pollGameServerDetails(CFClient, Server) {
+    let details = CFClient.getGameServerDetails({
         game: Game.DayZ,
-        ip: hostname,
-        port: port,
+        ip: Server.CFTOOLS_HOSTNAME,
+        port: Server.CFTOOLS_PORT,
     })
     return await details;
 }
