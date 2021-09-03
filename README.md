@@ -10,7 +10,10 @@ Eg. "HotGarbage: 0/60"
 
 First, be sure to create the discord channels that the bot will be responsible for managing.   Be sure that the bot
 has the permissions necessary for renaming those channels.  Also, use voice channels instead of text channels to be
-able to use special characters such as slash and parenthesis.
+able to use special characters such as slash and parenthesis.  
+
+Note that the Discord API has a rate limit of 2 per 10 minutes in place for channel renaming.  For this reason, you 
+shouldn't set the POLLING_INTERVAL to less than 5 minutes (300 seconds).
 
 #### CFTools Cloud
 
