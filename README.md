@@ -21,10 +21,10 @@ First, be sure to create the discord channels that the bot will be responsible f
 has the permissions necessary for renaming those channels.  Also, use voice channels instead of text channels to be
 able to use special characters such as slash and parenthesis.  
 
+![image](https://user-images.githubusercontent.com/7429/133143394-e4cd3bac-1f24-4d92-914f-5185a1c9cd31.png)
+
 Note that the Discord API has a rate limit of 2 per 10 minutes in place for channel renaming.  For this reason, you 
 shouldn't set the POLLING_INTERVAL to less than 2 or 3 minutes anyway because the discord channel will not be updated.
-
-![image](https://user-images.githubusercontent.com/7429/133143394-e4cd3bac-1f24-4d92-914f-5185a1c9cd31.png)
 
 #### Configuration
 
