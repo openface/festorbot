@@ -1,12 +1,10 @@
 
 ```
- _____   ___  _____ ______   ___   ____   ____    ___   ______ 
-|     | /  _]/ ___/|      T /   \ |    \ |    \  /   \ |      T
-|   __j/  [_(   \_ |      |Y     Y|  D  )|  o  )Y     Y|      |
-|  l_ Y    _]\__  Tl_j  l_j|  O  ||    / |     T|  O  |l_j  l_j
-|   _]|   [_ /  \ |  |  |  |     ||    \ |  O  ||     |  |  |  
-|  T  |     T\    |  |  |  l     !|  .  Y|     |l     !  |  |  
-l__j  l_____j \___j  l__j   \___/ l__j\_jl_____j \___/   l__j  
+  o888o ooooooooooo  oooooooo8 ooooooooooo   ooooooo  oooooooooo  oooo          ooooooo   ooooooooooo 
+o888oo   888    88  888        88  888  88 o888   888o 888    888  888ooooo   o888   888o 88  888  88 
+ 888     888ooo8     888oooooo     888     888     888 888oooo88   888    888 888     888     888     
+ 888     888    oo          888    888     888o   o888 888  88o    888    888 888o   o888     888     
+o888o   o888ooo8888 o88oooo888    o888o      88ooo88  o888o  88o8 o888ooo88     88ooo88      o888o    
 ```
 
 ## FestorBot (Yet Another DayZ Player Count Discord Bot)
