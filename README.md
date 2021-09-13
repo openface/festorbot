@@ -24,6 +24,8 @@ able to use special characters such as slash and parenthesis.
 Note that the Discord API has a rate limit of 2 per 10 minutes in place for channel renaming.  For this reason, you 
 shouldn't set the POLLING_INTERVAL to less than 2 or 3 minutes anyway because the discord channel will not be updated.
 
+![image](https://user-images.githubusercontent.com/7429/133143394-e4cd3bac-1f24-4d92-914f-5185a1c9cd31.png)
+
 #### Configuration
 
 Simply rename the included `config.json.sample` to `config.json` and edit accordingly.
