@@ -1,19 +1,20 @@
 {
   "name": "festor",
-  "version": "1.0.0",
-  "description": "Yet Another Discord Bot",
+  "version": "1.1.0",
+  "description": "Yet Another DayZ Discord Bot",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "discord",
-    "bot"
+    "bot",
+    "dayz"
   ],
   "author": "Jason Hines",
   "license": "ISC",
   "dependencies": {
-    "cftools-sdk": "^1.6.3",
-    "discord.js": "^13.1.0"
+    "discord.js": "^13.1.0",
+    "gamedig": "^3.0.7"
   }
 }

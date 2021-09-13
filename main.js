@@ -1,7 +1,7 @@
 // Require the necessary discord.js classes
 const Discord = require('discord.js');
+const Gamedig = require('gamedig');
 const Config = require('./config.json');
-const { CFToolsClientBuilder, Game } = require('cftools-sdk');
 
 const Client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS] });
 
@@ -25,42 +25,66 @@ Client.once('ready', () => {
         }]
     });
 
-    const CFClient = new CFToolsClientBuilder().build();
-
     setInterval(() => {
         Config.SERVERS.forEach((Server) => {
-            pollGameServerDetails(CFClient, Server).then((details) => {
-                let player_stats = details.status.players;
-                console.log(`Polled server ${Server.NAME} (${Server.CFTOOLS_HOSTNAME}:${Server.CFTOOLS_PORT})...`);
+            console.log(`Polling server ${Server.NAME} (${Server.ADDRESS}:${Server.PORT})...`);
+            let new_channel_name;
 
-                Client.channels.fetch(Server.CHANNEL_ID).then((channel) => {
-                    let new_channel_name;
-                    if (details.online) {
-                        // todo player_stats.queue
-                        new_channel_name = `${Server.NAME}: ${player_stats.online}/${player_stats.slots}`
-                    } else {
-                        new_channel_name = `${Server.NAME}: offline`
-                    }
+            getGameInfo(Server.ADDRESS, Server.PORT).then((response) => {
+                //console.log(response);
 
-                    // channel name is unchanged
+                let players_online = response.raw.numplayers;
+                let max_players = response.maxplayers;
+                let queued_players = response.raw.queue;
+
+                getDiscordChannel(Server.CHANNEL_ID).then((channel) => {
+                    new_channel_name = `${Server.NAME}: ${players_online}/${max_players}`
+
                     if (channel.name == new_channel_name) return;
-    
-                    console.log(`Setting channel name: ${new_channel_name}`);
-                    channel.setName(new_channel_name).catch(console.error);
-                }).catch(console.error);
 
-            }).catch(console.error);
+                    channel.setName(new_channel_name).then((newChannel) => {
+                        console.log(`Channel ${channel.name} is now named: ${newChannel.name}`)
+                    }).catch(console.error);
+
+                }).catch((error) => {
+                    console.error(`Unable to find discord channel! (${Server.CHANNEL_ID})`)
+                });
+
+            }).catch((error) => {
+                console.error(`Unable to query server/port! (${Server.ADDRESS}:${Server.PORT})`);
+
+                getDiscordChannel(Server.CHANNEL_ID).then((channel) => {
+                    new_channel_name = `${Server.NAME}: offline`
+
+                    if (channel.name == new_channel_name) return;
+
+                    channel.setName(new_channel_name).then((newChannel) => {
+                        console.log(`Channel ${channel.name} is now named: ${newChannel.name}`)
+                    }).catch(console.error);
+
+                }).catch((error) => {
+                    console.error(`Unable to find discord channel! (${Server.CHANNEL_ID})`)
+                });
+            });
         });
-    }, Config.POLLING_INTERVAL * 1000);
+    }, Math.max(Config.POLLING_INTERVAL, 60) * 1000); // forces min 60 secs to avoid spamming
 });
 
 Client.login(Config.BOT_TOKEN);
 
-async function pollGameServerDetails(CFClient, Server) {
-    let details = CFClient.getGameServerDetails({
-        game: Game.DayZ,
-        ip: Server.CFTOOLS_HOSTNAME,
-        port: Server.CFTOOLS_PORT,
+async function getGameInfo(address, port) {
+    //console.debug("Fetching game data...")
+    let response = Gamedig.query({
+        type: 'dayz',
+        host: address,
+        port: port,
+        requestRules: true
     })
-    return await details;
+    return await response;
+}
+
+async function getDiscordChannel(channel_id) {
+    //console.debug("Fetching discord channel...")
+    let response = Client.channels.fetch(channel_id)
+    return await response;
 }
