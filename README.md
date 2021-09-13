@@ -13,20 +13,17 @@ Since YADPCDB is a terrible name for a project, we'll just call it *festor*.   T
 node-based discord bot that queries your DayZ server for game information and updates your discord channel
 names to reflect the current player counts.
 
-Eg. "HotGarbage: 0/60"
-
-#### Discord
-
-First, be sure to create the discord channels that the bot will be responsible for managing.   Be sure that the bot
-has the permissions necessary for renaming those channels.  Also, use voice channels instead of text channels to be
-able to use special characters such as slash and parenthesis.  
-
 ![image](https://user-images.githubusercontent.com/7429/133143394-e4cd3bac-1f24-4d92-914f-5185a1c9cd31.png)
 
-Note that the Discord API has a rate limit of 2 per 10 minutes in place for channel renaming.  For this reason, you 
-shouldn't set the POLLING_INTERVAL to less than 2 or 3 minutes anyway because the discord channel will not be updated.
+#### Discord Setup
 
-#### Configuration
+First, invite the bot into your discord server.  We'll assume you know how this done.
+
+Secondly, create the discord voice channels that the bot will be responsible for within your discord 
+server.   Be sure that the bot has the permissions necessary for renaming those channels.  Make them voice 
+channels instead of text channels to be able to use special characters such as slash and parenthesis. 
+
+#### Bot Configuration
 
 Simply rename the included `config.json.sample` to `config.json` and edit accordingly.
 
@@ -40,6 +37,9 @@ Simply rename the included `config.json.sample` to `config.json` and edit accord
 | SERVERS.CHANNEL_ID        | The voice channel ID to rename to reflect the player count |
 | SERVERS.ADDRESS           | The server address or IP of your DayZ game server |
 | SERVERS.PORT              | Your DayZ steam query port (Game port also works) |
+
+Note that the Discord API has a rate limit of 2 per 10 minutes in place for channel renaming.  For this reason, you 
+shouldn't set the POLLING_INTERVAL to less than 2 or 3 minutes anyway because the discord channel will not be updated.
 
 #### Running Directly
 
