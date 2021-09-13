@@ -33,8 +33,8 @@ Simply rename the included `config.json.sample` to `config.json` and edit accord
 | PRESENCE_NAME             | Name of activity the bot is doing |
 | PRESENCE_TYPE             | Type of activity the bot is doing (PLAYING, STREAMING, WATCHING, etc) |
 | POLLING_INTERVAL          | How often (in seconds) to poll server for game info |
-| SERVERS.NAME              | Name of your DayZ server (short name) |
-| SERVERS.CHANNEL_ID        | The voice channel ID to rename to reflect the player count |
+| SERVERS.NAME              | Name of this DayZ game server (a short name) |
+| SERVERS.CHANNEL_ID        | The discord voice channel ID that will be renamed |
 | SERVERS.ADDRESS           | The server address or IP of your DayZ game server |
 | SERVERS.PORT              | Your DayZ steam query port (Game port also works) |
 
