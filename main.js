@@ -43,7 +43,7 @@ Client.once('ready', () => {
                     if (channel.name == new_channel_name) return;
 
                     channel.setName(new_channel_name).then((newChannel) => {
-                        console.log(`Channel ${channel.name} is now named: ${newChannel.name}`)
+                        console.log(`Channel ID ${Server.CHANNEL_ID} is now named: ${newChannel.name}`)
                     }).catch(console.error);
 
                 }).catch((error) => {
@@ -59,7 +59,7 @@ Client.once('ready', () => {
                     if (channel.name == new_channel_name) return;
 
                     channel.setName(new_channel_name).then((newChannel) => {
-                        console.log(`Channel ${channel.name} is now named: ${newChannel.name}`)
+                        console.log(`Channel ID ${Server.CHANNEL_ID} is now named: ${newChannel.name}`)
                     }).catch(console.error);
 
                 }).catch((error) => {
