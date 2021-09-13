@@ -1,7 +1,7 @@
 ## DayZ Player Count Discord Bot
 
 Since DPCDB is a terrible name for a project, we'll just call it *festor*.   The FesterBot is a stupid-simple
-node-based discord bot that queries your DayZ server for player count information and updates your discord channel
+node-based discord bot that queries your DayZ server for game information and updates your discord channel
 names to reflect the current player counts.
 
 Eg. "HotGarbage: 0/60"
