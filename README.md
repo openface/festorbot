@@ -58,8 +58,3 @@ docker build . -t openface/festorbot
 docker run -it --init openface/festorbot
 docker run -d --init openface/festorbot
 ```
-
-#### TODO
-
-* Add queue support
-* Maybe some other stuff
