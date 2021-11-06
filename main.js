@@ -61,28 +61,35 @@ Client.once('ready', () => {
                     new_channel_name = `${new_channel_name} (+${queued_players})`;
                 }
 
-                //console.debug(`Current: ${new_channel_name}`);
-
-                // do nothing if it's what we already have cached
-                if (Cache.has(Server.NAME) && Cache.get(Server.NAME) == new_channel_name) {
-                    //console.debug('Cached, no change.');
-                    return;
-                }
-
-                // set the discord channel name and save to cache
-                let Channel = Client.channels.cache.get(Server.CHANNEL_ID);
-                Channel.setName(new_channel_name).then((newChannel) => {
-                    console.log(`Channel ID ${Server.CHANNEL_ID} is now named: ${newChannel.name}`)
-                    Cache.set(Server.NAME, newChannel.name);
-                }).catch(console.error);
-
+                UpdateChannelName(new_channel_name, Server);
             }).catch((error) => {
                 console.error(`Unable to query game server! (${Server.ADDRESS}:${Server.PORT})`);
                 console.error(error);
+
+                let new_channel_name = `${Server.NAME}: offline`;
+
+                UpdateChannelName(new_channel_name, Server);
             });
         });
     }, PollingIntervalSeconds * 1000);
     console.log(`Polling game servers every ${PollingIntervalSeconds} seconds...`);
 });
+
+function UpdateChannelName(new_channel_name, Server) {
+    console.debug(`Current: ${new_channel_name}`);
+
+    // do nothing if it's what we already have cached
+    if (Cache.has(Server.NAME) && Cache.get(Server.NAME) == new_channel_name) {
+        //console.debug('Cached, no change.');
+        return;
+    }
+
+    // set the discord channel name and save to cache
+    let Channel = Client.channels.cache.get(Server.CHANNEL_ID);
+    Channel.setName(new_channel_name).then((newChannel) => {
+        console.log(`Channel ID ${Server.CHANNEL_ID} is now named: ${newChannel.name}`)
+        Cache.set(Server.NAME, newChannel.name);
+    }).catch(console.error);
+}
 
 Client.login(Config.BOT_TOKEN);
