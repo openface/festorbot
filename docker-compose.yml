@@ -1,8 +1,8 @@
-version: '3.7'
+version: '2.2'
 
 services:
   bot:
     build: .
-    init: true
+    init: /usr/libexec/docker-init
     volumes:
       - .:/usr/src/app
