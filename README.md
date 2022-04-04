@@ -58,3 +58,9 @@ docker build . -t openface/festorbot
 docker run -it --init openface/festorbot
 docker run -d --init openface/festorbot
 ```
+
+#### Running in Compose
+
+```
+docker-compose up [-d]
+```
