@@ -6,3 +6,4 @@ services:
     init: /usr/libexec/docker-init
     volumes:
       - .:/usr/src/app
+      - /usr/src/app/node_modules
