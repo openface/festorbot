@@ -51,16 +51,5 @@ node .
 #### Running in Docker
 
 ```
-# Build image
-docker build . -t openface/festorbot
-
-# Run interactively (-it) or as a daemon (-d)
-docker run -it --init openface/festorbot
-docker run -d --init openface/festorbot
-```
-
-#### Running in Compose
-
-```
-docker-compose up [-d]
+docker compose up --build [-d]
 ```
