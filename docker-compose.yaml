@@ -1,0 +1,7 @@
+services:
+  bot:
+    build:
+      context: .
+    restart: on-failure
+    environment:
+      NODE_ENV: production
