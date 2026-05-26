@@ -33,15 +33,17 @@ If you plan to enable the LFG feature, the bot needs a few extra things:
   - **Message Content Intent** — so the bot can read messages in your `#lfg` channel.
 - When inviting/re-inviting the bot, the OAuth URL must request both the `bot` and `applications.commands` scopes (the second one is needed for the `/lfg` slash command).
 - Grant the bot these permissions in the server: `Manage Roles`, `Send Messages`, `Read Message History`, and (for the existing feature) `Manage Channels`.
+- Also grant **either** `Mention @everyone, @here, and All Roles` **or** mark the `@LFG` role itself as Mentionable (see below).  Without one of these, the bot's `<@&LFG>` will render as a styled pill but will not actually notify role-holders.
 
 If you are only using the player-count feature, none of the above is required.
 
 ##### LFG feature setup
 
 - Create a role named `@LFG` (the name is up to you — only the ID matters).  Decide whether to mark it **"Allow anyone to @mention this role"**:
-  - **On:** users can `@LFG` directly and Discord pings the role for them.  The bot detects this and suppresses its own echo ping.
-  - **Off:** only the bot pings, when it detects the keyword `lfg` in a message or sees a styled (non-pinging) `@LFG` mention.
+  - **On (simplest):** users can `@LFG` directly and Discord notifies role-holders.  The bot detects this case and suppresses its own echo ping.  The bot's own keyword-triggered ping also notifies, because the role is mentionable to everyone (bot included).
+  - **Off:** only the bot can notify role-holders, and **only** if the bot has been granted the `Mention @everyone, @here, and All Roles` permission.  Without that permission, the bot's `<@&LFG>` mention will render as a styled pill but will silently fail to notify anyone.  If unsure, leave the role Mentionable.
 - Create a text channel named `#lfg` (again the name is up to you).  Anyone who can see the channel can post and trigger pings; the role is just for receiving notifications.
+- **If the channel is private** (has permission overrides restricting who can view it), explicitly grant the bot (or the bot's role) access to that channel: `View Channel`, `Send Messages`, `Read Message History`.  Server-wide permissions do not override channel-level restrictions, and without channel-level access the bot will not receive `messageCreate` events from that channel at all — keywords will silently do nothing.
 - **Crucial:** drag the bot's own role **above** `@LFG` in *Server Settings → Roles*.  Discord forbids a role from managing roles equal to or above it; without this, `/lfg` will fail with a permission error.
 - Grab the IDs (right-click → Copy ID with Developer Mode on) for:
   - The server (guild) → `GUILD_ID`
