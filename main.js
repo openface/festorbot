@@ -2,11 +2,28 @@
 const Discord = require('discord.js');
 const Gamedig = require('gamedig');
 const Config = require('./config.json');
+const Lfg = require('./lfg');
+
+const LfgEnabled = Lfg.lfgEnabled(Config);
+console.log(`LFG feature: ${LfgEnabled ? 'enabled' : 'disabled'}`);
+
+const Intents = [Discord.Intents.FLAGS.GUILDS];
+if (LfgEnabled) {
+    Intents.push(
+        Discord.Intents.FLAGS.GUILD_MEMBERS,
+        Discord.Intents.FLAGS.GUILD_MESSAGES,
+        Discord.Intents.FLAGS.MESSAGE_CONTENT,
+    );
+}
 
 const Client = new Discord.Client({
-    intents: [Discord.Intents.FLAGS.GUILDS],
+    intents: Intents,
     rejectOnRateLimit: () => true
 });
+
+if (LfgEnabled) {
+    Lfg.attachHandlers(Client, Config);
+}
 
 // Handle ctrl-c to run bot when run interactively
 process.on('SIGINT', () => {
@@ -33,6 +50,12 @@ Client.once('ready', () => {
             type: Config.PRESENCE_TYPE,
         }]
     });
+
+    if (LfgEnabled) {
+        Lfg.registerCommands(Client, Config).catch((error) => {
+            console.error('Failed to register LFG slash command:', error);
+        });
+    }
 
     setInterval(() => {
         Config.SERVERS.forEach((Server) => {
