@@ -11,8 +11,7 @@ o888o   o888ooo8888 o88oooo888    o888o      88ooo88  o888o  88o8 o888ooo88     
 
 Since YADPCDB is a terrible name for a project, we'll just call it *festor*.   FestorBot is a stupid-simple
 node-based discord bot that queries your DayZ server for game information and updates your discord channel
-names to reflect the current player counts.  It also provides an optional **Looking For Group (LFG)** feature
-so players can opt in to an `@LFG` role and find groups in a dedicated channel.
+names to reflect the current player counts.  It also provides an optional **Looking For Group (LFG)** feature so players can opt in to an `@LFG` role and find groups in a dedicated channel.
 
 ![image](https://user-images.githubusercontent.com/7429/133143394-e4cd3bac-1f24-4d92-914f-5185a1c9cd31.png)
 
@@ -35,7 +34,7 @@ If you plan to enable the LFG feature, the bot needs a few extra things:
 - Grant the bot these permissions in the server: `Manage Roles`, `Send Messages`, `Read Message History`, and (for the existing feature) `Manage Channels`.
 - Also grant **either** `Mention @everyone, @here, and All Roles` **or** mark the `@LFG` role itself as Mentionable (see below).  Without one of these, the bot's `<@&LFG>` will render as a styled pill but will not actually notify role-holders.
 
-If you are only using the player-count feature, none of the above is required.
+If you are only using the player-count feature, only `Manage Channels` is required — the intents, the `applications.commands` scope, and the role/mention permissions are all LFG-only.
 
 ##### LFG feature setup
 
