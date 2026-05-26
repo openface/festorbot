@@ -41,12 +41,14 @@ function attachHandlers(Client, Config) {
             if (member.roles.cache.has(roleId)) {
                 await member.roles.remove(roleId);
                 await interaction.reply({ content: "You're no longer LFG.", ephemeral: true });
+                console.log(`LFG: ${member.user.tag} opted out`);
             } else {
                 await member.roles.add(roleId);
                 await interaction.reply({
                     content: `You're now LFG — head to <#${channelId}>.`,
                     ephemeral: true,
                 });
+                console.log(`LFG: ${member.user.tag} opted in`);
             }
         } catch (error) {
             console.error('LFG role toggle failed:', error);
@@ -67,23 +69,33 @@ function attachHandlers(Client, Config) {
 
         if (!keywordMatch && !roleMention) return;
 
+        const trigger = keywordMatch ? 'keyword' : 'role-mention';
+        const author = message.author.tag;
+        const channelName = message.channel.name;
         const cooldownMs = (Config.LFG.PING_COOLDOWN_MINUTES || 10) * 60 * 1000;
 
         if (roleMention) {
             const role = message.guild.roles.cache.get(roleId);
             if (role && role.mentionable) {
                 lastPingAt = Date.now();
+                console.log(`LFG: ping suppressed in #${channelName} (user ${author} already pinged via mentionable role)`);
                 return;
             }
         }
 
-        if (Date.now() - lastPingAt < cooldownMs) return;
+        const elapsed = Date.now() - lastPingAt;
+        if (elapsed < cooldownMs) {
+            const remainingMin = Math.ceil((cooldownMs - elapsed) / 60000);
+            console.log(`LFG: ping suppressed in #${channelName} (cooldown, ~${remainingMin}m remaining; trigger: ${trigger} by ${author})`);
+            return;
+        }
 
         message.channel.send({
             content: `<@&${roleId}>`,
             allowedMentions: { roles: [roleId] },
         }).then(() => {
             lastPingAt = Date.now();
+            console.log(`LFG: ping fired in #${channelName} (trigger: ${trigger} by ${author})`);
         }).catch((error) => {
             console.error('LFG ping send failed:', error);
         });
