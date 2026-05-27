@@ -90,9 +90,9 @@ function attachHandlers(Client, Config) {
             return;
         }
 
-        message.channel.send({
+        message.reply({
             content: `<@&${roleId}>`,
-            allowedMentions: { roles: [roleId] },
+            allowedMentions: { roles: [roleId], repliedUser: false },
         }).then(() => {
             lastPingAt = Date.now();
             console.log(`LFG: ping fired in #${channelName} (trigger: ${trigger} by ${author})`);
