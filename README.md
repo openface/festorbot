@@ -17,11 +17,10 @@ names to reflect the current player counts.  It also has an optional **Looking F
 
 #### Discord Setup
 
-First, invite the bot into your discord server.  We'll assume you know how this done.
+First, create an application in the [Discord Developer Portal](https://discord.com/developers/applications), add a bot to it, and copy the bot token (you'll need it for `BOT_TOKEN`).  Then under **OAuth2 → URL Generator**, tick the `bot` scope, select the permissions you need (at minimum `Manage Channels`), and open the generated URL to invite the bot to your server.
 
 Secondly, create the discord voice channels that the bot will be responsible for within your discord 
-server.   Grant the bot the `Manage Channels` permission so it can rename them.  Make them voice 
-channels instead of text channels to be able to use special characters such as slash and parenthesis. 
+server.  Use voice channels instead of text channels to be able to use special characters such as slash and parenthesis. 
 
 ##### LFG Setup
 
