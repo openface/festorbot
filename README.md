@@ -20,7 +20,7 @@ names to reflect the current player counts.  It also has an optional **Looking F
 First, invite the bot into your discord server.  We'll assume you know how this done.
 
 Secondly, create the discord voice channels that the bot will be responsible for within your discord 
-server.   Be sure that the bot has the permissions necessary for renaming those channels.  Make them voice 
+server.   Grant the bot the `Manage Channels` permission so it can rename them.  Make them voice 
 channels instead of text channels to be able to use special characters such as slash and parenthesis. 
 
 ##### LFG Setup
