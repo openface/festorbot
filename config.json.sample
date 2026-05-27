@@ -2,7 +2,6 @@
     "BOT_TOKEN": "DISCORD-BOT-TOKEN",
     "PRESENCE_NAME": "DayZ",
     "PRESENCE_TYPE": "WATCHING",
-    "POLLING_INTERVAL": 300,
     "GUILD_ID": "DISCORD-GUILD-ID",
     "LFG": {
         "ENABLED": false,

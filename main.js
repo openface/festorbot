@@ -31,11 +31,17 @@ process.on('SIGINT', () => {
     process.exit(0)
 });
 
-// forces min 60 secs to avoid spamming
-const PollingIntervalSeconds = Math.max(Config.POLLING_INTERVAL, 60);
+// 60s matches Discord's 5-min rename cooldown closely enough that renames
+// fire within one poll of the cooldown expiring; raising it just adds latency.
+const PollingIntervalSeconds = 60;
 
 // Store game info from last poll attempt
 let Cache = new Map();
+
+// Discord limits channel renames to 2 per 10 min per channel. Skip rename
+// attempts inside this window so we don't burn the bucket on stale data.
+const RenameCooldownMs = 5 * 60 * 1000;
+let RenameCooldownUntil = new Map();
 
 console.log('Starting Discord bot...');
 
@@ -59,6 +65,14 @@ Client.once('ready', () => {
 
     setInterval(() => {
         Config.SERVERS.forEach((Server) => {
+            // skip the game server query entirely if we can't rename anyway
+            let cooldownUntil = RenameCooldownUntil.get(Server.NAME) || 0;
+            if (Date.now() < cooldownUntil) {
+                let secondsLeft = Math.ceil((cooldownUntil - Date.now()) / 1000);
+                console.debug(`Skipping ${Server.NAME}: rename cooldown active (${secondsLeft}s remaining).`);
+                return;
+            }
+
             console.debug(`Polling server ${Server.NAME} (${Server.ADDRESS}:${Server.PORT})...`);
             let new_channel_name;
 
@@ -107,12 +121,27 @@ function UpdateChannelName(new_channel_name, Server) {
         return;
     }
 
+    // skip if we're inside a known cooldown window
+    let cooldownUntil = RenameCooldownUntil.get(Server.NAME) || 0;
+    if (Date.now() < cooldownUntil) {
+        return;
+    }
+
     // set the discord channel name and save to cache
     let Channel = Client.channels.cache.get(Server.CHANNEL_ID);
+    RenameCooldownUntil.set(Server.NAME, Date.now() + RenameCooldownMs);
     Channel.setName(new_channel_name).then((newChannel) => {
         console.log(`Channel ID ${Server.CHANNEL_ID} is now named: ${newChannel.name}`)
         Cache.set(Server.NAME, newChannel.name);
-    }).catch(console.error);
+    }).catch((error) => {
+        if (error.name === 'RateLimitError') {
+            let timeout = error.timeout || RenameCooldownMs;
+            RenameCooldownUntil.set(Server.NAME, Date.now() + timeout);
+            console.warn(`Rate limited renaming ${Server.NAME}; backing off ${Math.round(timeout / 1000)}s.`);
+            return;
+        }
+        console.error(error);
+    });
 }
 
 Client.login(Config.BOT_TOKEN);

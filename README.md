@@ -47,7 +47,6 @@ Simply rename the included `config.json.sample` to `config.json` and edit accord
 | BOT_TOKEN                 | Discord bot token to identify it on discord |
 | PRESENCE_NAME             | Name of activity the bot is doing |
 | PRESENCE_TYPE             | Type of activity the bot is doing (PLAYING, STREAMING, WATCHING, etc) |
-| POLLING_INTERVAL          | How often (in seconds) to poll server for game info |
 | GUILD_ID                  | Discord server ID, required for LFG to register the `/lfg` slash command |
 | LFG                       | Optional LFG config block; omit entirely to disable the feature |
 | LFG.ENABLED               | Set to `false` to disable LFG without removing the block (defaults to `true`) |
@@ -60,8 +59,7 @@ Simply rename the included `config.json.sample` to `config.json` and edit accord
 | SERVERS.ADDRESS           | The server address or IP of your DayZ game server |
 | SERVERS.PORT              | Your DayZ steam query port (Game port also works) |
 
-Note that the Discord API has a rate limit of 2 per 10 minutes in place for channel renames.  For this reason, you 
-shouldn't set the `POLLING_INTERVAL` to less than 2 or 3 minutes anyway because the discord channel will not be updated.
+Note that the Discord API has a rate limit of 2 per 10 minutes in place for channel renames.  The bot polls every 60 seconds and enforces a 5 minute cooldown per channel to stay safely under that limit — polls that arrive during the cooldown are skipped (not queued), so the next allowed rename always reflects the freshest player count rather than a stale one.
 
 #### LFG Usage
 
