@@ -31,7 +31,10 @@ Skip this section if you only want player counts.  Otherwise:
 - Grant the bot `Manage Roles`, `Send Messages`, and `Read Message History` (in addition to `Manage Channels`).
 - Create a role named `@LFG` and a text channel named `#lfg` (names are up to you, only IDs matter).
 - Drag the bot's role **above** `@LFG` in *Server Settings → Roles*, otherwise `/lfg` will fail.
-- For the bot to actually notify role-holders, either mark `@LFG` as Mentionable, or grant the bot `Mention @everyone, @here, and All Roles`.  Without one of these the ping renders but notifies nobody.
+- Decide how `@LFG` pings get delivered.  Discord will only push a notification to role-holders if the sender is allowed to mention the role, and there are two ways to allow it:
+  - **Mark `@LFG` as Mentionable** (in the role settings).  Anyone — including the bot — can then ping it.  This is the simplest setup.
+  - **Or grant the bot `Mention @everyone, @here, and All Roles`.**  The role stays locked down so regular users can't ping it, but the bot still can.
+  - If you do neither, the bot's `<@&LFG>` will render as a styled pill in chat but Discord will silently drop the notification — role-holders see nothing.
 - If `#lfg` is private, grant the bot channel-level `View Channel`, `Send Messages`, and `Read Message History` — server-wide perms don't override channel restrictions.
 - With Developer Mode on, right-click → Copy ID for the server, the `@LFG` role, and the `#lfg` channel.  You'll need these for `GUILD_ID`, `LFG.ROLE_ID`, and `LFG.CHANNEL_ID`.
 
