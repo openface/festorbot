@@ -3,6 +3,14 @@
     "PRESENCE_NAME": "DayZ",
     "PRESENCE_TYPE": "WATCHING",
     "POLLING_INTERVAL": 300,
+    "GUILD_ID": "DISCORD-GUILD-ID",
+    "LFG": {
+        "ENABLED": false,
+        "ROLE_ID": "DISCORD-LFG-ROLE-ID",
+        "CHANNEL_ID": "DISCORD-LFG-CHANNEL-ID",
+        "KEYWORDS": ["lfg"],
+        "PING_COOLDOWN_MINUTES": 10
+    },
     "SERVERS": [
         {
             "NAME": "Server1",
